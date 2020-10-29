@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     //Play positioning enums
-    public float playerSpeed = 5;
+    public float playerSpeed = 50;
 
     //Declare Axis
     private float xAxis;
@@ -45,7 +45,11 @@ public class PlayerController : MonoBehaviour
     public void PlayerMovement()
     {
         float move = Input.GetAxis ("Horizontal") ;
+
         Vector3 targetVelocity = new Vector2 ( move * playerSpeed, rigidBody.velocity.y);// Move the character by finding the target velocity
+        rigidBody.velocity = targetVelocity;
+
+
         anim.SetTrigger("WalkRight");
         
         if (Input.GetButtonDown("Jump"))//&& DetectFloor()
