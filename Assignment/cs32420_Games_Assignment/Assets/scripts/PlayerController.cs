@@ -31,12 +31,13 @@ public class PlayerController : MonoBehaviour
     //Height of jump
     public float jumpForce = 5; 
 
-    private Animator anim; 
+    private Animator anim;
 
+    public PlayerState player; 
 
     public void Start(){
         anim = gameObject.GetComponent<Animator>();
-        anim.SetTrigger("Idle");
+        anim.SetTrigger("Idle"); 
     }
 
     /// <summary>
@@ -44,42 +45,37 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public void PlayerMovement()
     {
-        float move = Input.GetAxis ("Horizontal") ;
-
+        float move = Input.GetAxis ("Horizontal");
+        
         Vector3 targetVelocity = new Vector2 ( move * playerSpeed, rigidBody.velocity.y);// Move the character by finding the target velocity
         rigidBody.velocity = targetVelocity;
 
-
         anim.SetTrigger("WalkRight");
         
-        if (Input.GetButtonDown("Jump"))//&& DetectFloor()
+        if (Input.GetButtonDown("Jump") && player == PlayerState.GROUND)
             {
                 rigidBody.velocity = new Vector2(rigidBody.velocity.x, jumpForce); 
                 anim.SetTrigger("Jump Pressed");
+                player = PlayerState.JUMP;
                 Debug.Log("PlayerController PlayerMovement Jump");
             }      
     }
-        
-        
-        
-    /// <summary>"
-    /// Checks if touching the ground and returns a bool.
-    /// </summary>
-    public bool DetectFloor()
+
+
+    public void StateMachine()
     {
-        var result = Collider2D.IsTouchingLayers(PlatformLayer);
-        Debug.Log(result ? "Touching the platform" : "Not touching the platform");
-        return result;
+        if (Collider2D.IsTouchingLayers(PlatformLayer))
+        {
+            player = PlayerState.GROUND;
+        }
     }
+
 
     /// <summary>"
     /// Calls movement methods
     /// </summary>
     public void Update(){
+        StateMachine(); 
         PlayerMovement();
-    }
-
-    public void FixedUpdate(){
-        DetectFloor();
     }
 }
