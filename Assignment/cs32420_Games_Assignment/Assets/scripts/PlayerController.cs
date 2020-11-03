@@ -1,19 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Security.Cryptography;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
     //Play positioning enums
-    public float playerSpeed = 50;
+    public float playerSpeed = 10;
 
     //Declare Axis
     private float xAxis;
     private float yAxis;
 
-    //Platform Layer
+    //Layers
     public LayerMask PlatformLayer;
-
+    public LayerMask DeathLayer; 
 
     //Player State
     public enum PlayerState
@@ -33,11 +35,14 @@ public class PlayerController : MonoBehaviour
 
     private Animator anim;
 
-    public PlayerState player; 
+    public PlayerState player;
+
+    private float old_position;
 
     public void Start(){
         anim = gameObject.GetComponent<Animator>();
-        anim.SetTrigger("Idle"); 
+        anim.SetTrigger("Idle");
+        old_position = transform.position.x;
     }
 
     /// <summary>
@@ -46,19 +51,41 @@ public class PlayerController : MonoBehaviour
     public void PlayerMovement()
     {
         float move = Input.GetAxis ("Horizontal");
-        
-        Vector3 targetVelocity = new Vector2 ( move * playerSpeed, rigidBody.velocity.y);// Move the character by finding the target velocity
-        rigidBody.velocity = targetVelocity;
+        float moveUp = Input.GetAxis("Vertical");
 
-        anim.SetTrigger("WalkRight");
-        
+        if (old_position <= this.GetComponent<Transform>().position.x)
+        {
+            Vector2 targetVelocity = new Vector2 ( move * playerSpeed, rigidBody.velocity.y);// Move the character by finding the target velocity
+            rigidBody.velocity = targetVelocity;
+
+            anim.SetTrigger("WalkRight");
+            UnityEngine.Debug.Log("PlayerController PlayerMovement WalkRight");
+
+            jumpMethod();
+
+        }
+
+        else
+        {
+            UnityEngine.Debug.Log("PlayerController PlayerMovement WalkLeft");
+
+            Vector2 targetVelocity = new Vector2(move * playerSpeed, rigidBody.velocity.y);// Move the character by finding the target velocity
+            rigidBody.velocity = targetVelocity;
+
+            jumpMethod();
+        }
+    }
+
+
+    public void jumpMethod()
+    {
         if (Input.GetButtonDown("Jump") && player == PlayerState.GROUND)
-            {
-                rigidBody.velocity = new Vector2(rigidBody.velocity.x, jumpForce); 
-                anim.SetTrigger("Jump Pressed");
-                player = PlayerState.JUMP;
-                Debug.Log("PlayerController PlayerMovement Jump");
-            }      
+        {
+            rigidBody.velocity = new Vector2(rigidBody.velocity.x, jumpForce);
+            anim.SetTrigger("Jump Pressed");
+            player = PlayerState.JUMP;
+            UnityEngine.Debug.Log("PlayerController PlayerMovement Jump");
+        }
     }
 
 
@@ -67,6 +94,10 @@ public class PlayerController : MonoBehaviour
         if (Collider2D.IsTouchingLayers(PlatformLayer))
         {
             player = PlayerState.GROUND;
+        }
+        if (Collider2D.IsTouchingLayers(DeathLayer))
+        {
+            player = PlayerState.DEATH;
         }
     }
 
