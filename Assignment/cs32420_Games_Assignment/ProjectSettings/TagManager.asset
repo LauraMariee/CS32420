@@ -19,7 +19,7 @@ TagManager:
   - BackgroundDetails
   - Background
   - Seam
-  - 
+  - GameOver
   - 
   - 
   - 
@@ -56,4 +56,7 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 4180560905
+    locked: 0
+  - name: GameOver
+    uniqueID: 2629788827
     locked: 0
