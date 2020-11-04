@@ -26,8 +26,7 @@ public class PlayerController : MonoBehaviour
         DEATH
     };
 
-    //Rigidbody
-    public Rigidbody2D rigidBody;
+    private Rigidbody2D rigidbody;
     public Collider2D Collider2D;
 
     //Height of jump
@@ -37,12 +36,11 @@ public class PlayerController : MonoBehaviour
 
     public PlayerState player;
 
-    private float old_position;
-
     public void Start(){
         anim = gameObject.GetComponent<Animator>();
         anim.SetTrigger("Idle");
-        old_position = transform.position.x;
+        rigidbody = GetComponent<Rigidbody2D>(); 
+
     }
 
     /// <summary>
@@ -51,37 +49,34 @@ public class PlayerController : MonoBehaviour
     public void PlayerMovement()
     {
         float move = Input.GetAxis ("Horizontal");
-        float moveUp = Input.GetAxis("Vertical");
-
-        if (old_position <= this.GetComponent<Transform>().position.x)
+        StateMachine();
+        if (move < 0.0f)
         {
-            Vector2 targetVelocity = new Vector2 ( move * playerSpeed, rigidBody.velocity.y);// Move the character by finding the target velocity
-            rigidBody.velocity = targetVelocity;
-
             anim.SetTrigger("WalkRight");
+            rigidbody.velocity = new Vector2 ( move * playerSpeed, rigidbody.velocity.y);// Move the character by finding the target velocity
+            //TODO: Fix angular velocity
             UnityEngine.Debug.Log("PlayerController PlayerMovement WalkRight");
 
-            jumpMethod();
-
         }
-
+        else if (move > 0.0f)
+        {
+            rigidbody.velocity = new Vector2(move * playerSpeed, rigidbody.velocity.y);// Move the character by finding the target velocity
+            UnityEngine.Debug.Log("PlayerController PlayerMovement WalkLeft");
+        }
         else
         {
-            UnityEngine.Debug.Log("PlayerController PlayerMovement WalkLeft");
-
-            Vector2 targetVelocity = new Vector2(move * playerSpeed, rigidBody.velocity.y);// Move the character by finding the target velocity
-            rigidBody.velocity = targetVelocity;
-
-            jumpMethod();
+            anim.SetTrigger("Idle");
+            UnityEngine.Debug.Log("PlayerController PlayerMovement Idle");
         }
+        Jump(); 
     }
 
 
-    public void jumpMethod()
+    public void Jump()
     {
         if (Input.GetButtonDown("Jump") && player == PlayerState.GROUND)
         {
-            rigidBody.velocity = new Vector2(rigidBody.velocity.x, jumpForce);
+            rigidbody.velocity = new Vector2(rigidbody.position.y, jumpForce);
             anim.SetTrigger("Jump Pressed");
             player = PlayerState.JUMP;
             UnityEngine.Debug.Log("PlayerController PlayerMovement Jump");
@@ -106,7 +101,7 @@ public class PlayerController : MonoBehaviour
     /// Calls movement methods
     /// </summary>
     public void Update(){
-        StateMachine(); 
+        //StateMachine(); 
         PlayerMovement();
     }
 }

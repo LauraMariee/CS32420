@@ -9546,6 +9546,7 @@ GameObject:
   - component: {fileID: 1715208666}
   - component: {fileID: 1715208665}
   - component: {fileID: 1715208664}
+  - component: {fileID: 1715208667}
   - component: {fileID: 1715208663}
   - component: {fileID: 1715208661}
   - component: {fileID: 1715208662}
@@ -9571,13 +9572,12 @@ MonoBehaviour:
   playerSpeed: 5
   PlatformLayer:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 256
   DeathLayer:
     serializedVersion: 2
     m_Bits: 0
-  rigidBody: {fileID: 1715208664}
-  Collider2D: {fileID: 1715208663}
-  jumpForce: 5
+  Collider2D: {fileID: 1715208667}
+  jumpForce: 10
   player: 1
 --- !u!95 &1715208662
 Animator:
@@ -9638,7 +9638,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
@@ -9709,6 +9709,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &1715208667
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1715208660}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.007816247, y: -0.06775789}
+  serializedVersion: 2
+  m_Radius: 0.13799047
 --- !u!1 &2042207486
 GameObject:
   m_ObjectHideFlags: 0
