@@ -70,21 +70,20 @@ public class PlayerController : MonoBehaviour
             UnityEngine.Debug.Log("PlayerController PlayerMovement Idle");
         }
 
-        
-        Jump(); 
+        if (Input.GetButtonDown("Jump") && player == PlayerState.GROUND)
+        {
+            Jump();
+        }
+            
     }
 
 
     public void Jump()
     {
-        if (Input.GetButtonDown("Jump") && player == PlayerState.GROUND)
-        {
-            player = PlayerState.JUMP;
-            anim.SetTrigger("Jump Pressed");
-            rigidbody.AddForce(Vector2.up * jumpForce); 
-            //rigidbody.velocity = new Vector2(rigidbody.position.x, jumpForce);
-            UnityEngine.Debug.Log("PlayerController PlayerMovement Jump");
-        }
+        player = PlayerState.JUMP;
+        anim.SetTrigger("Jump Pressed");
+        rigidbody.AddForce(Vector2.up * jumpForce); 
+        UnityEngine.Debug.Log("PlayerController PlayerMovement Jump");
     }
 
 
