@@ -40,7 +40,6 @@ public class PlayerController : MonoBehaviour
         anim = gameObject.GetComponent<Animator>();
         anim.SetTrigger("Idle");
         rigidbody = GetComponent<Rigidbody2D>(); 
-
     }
 
     /// <summary>
@@ -50,10 +49,12 @@ public class PlayerController : MonoBehaviour
     {
         float move = Input.GetAxis ("Horizontal");
         StateMachine();
+        
+
         if (move < 0.0f)
         {
             anim.SetTrigger("WalkRight");
-            rigidbody.velocity = new Vector2 ( move * playerSpeed, rigidbody.velocity.y);// Move the character by finding the target velocity
+            rigidbody.velocity = new Vector2(move * playerSpeed, rigidbody.velocity.y);// Move the character by finding the target velocity
             //TODO: Fix angular velocity
             UnityEngine.Debug.Log("PlayerController PlayerMovement WalkRight");
 
@@ -68,6 +69,8 @@ public class PlayerController : MonoBehaviour
             anim.SetTrigger("Idle");
             UnityEngine.Debug.Log("PlayerController PlayerMovement Idle");
         }
+
+        
         Jump(); 
     }
 
@@ -76,9 +79,10 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetButtonDown("Jump") && player == PlayerState.GROUND)
         {
-            rigidbody.velocity = new Vector2(rigidbody.position.y, jumpForce);
-            anim.SetTrigger("Jump Pressed");
             player = PlayerState.JUMP;
+            anim.SetTrigger("Jump Pressed");
+            rigidbody.AddForce(Vector2.up * jumpForce); 
+            //rigidbody.velocity = new Vector2(rigidbody.position.x, jumpForce);
             UnityEngine.Debug.Log("PlayerController PlayerMovement Jump");
         }
     }

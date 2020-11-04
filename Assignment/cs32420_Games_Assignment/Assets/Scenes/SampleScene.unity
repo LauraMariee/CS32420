@@ -9569,7 +9569,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c911576bcd1a12b41a68feb5ce047888, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerSpeed: 5
+  playerSpeed: 2
   PlatformLayer:
     serializedVersion: 2
     m_Bits: 256
@@ -9577,7 +9577,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   Collider2D: {fileID: 1715208667}
-  jumpForce: 10
+  jumpForce: 320
   player: 1
 --- !u!95 &1715208662
 Animator:
