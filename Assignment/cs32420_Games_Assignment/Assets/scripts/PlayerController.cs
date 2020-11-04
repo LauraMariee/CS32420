@@ -97,6 +97,7 @@ public class PlayerController : MonoBehaviour
         if (Collider2D.IsTouchingLayers(GameOverLayer))
         {
             UnityEngine.Debug.Log("PlayerController StateMachine GAMEOVER");
+            anim.SetTrigger("GameOver");
             player = PlayerState.GAMEOVER;
 
         }
