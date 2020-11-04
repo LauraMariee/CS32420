@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
 
     //Layers
     public LayerMask PlatformLayer;
-    public LayerMask DeathLayer; 
+    public LayerMask GameOverLayer; 
 
     //Player State
     public enum PlayerState
@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
         JUMP,
         GROUND,
         CLIMB,
-        DEATH
+        GAMEOVER
     };
 
     private Rigidbody2D rigidbody;
@@ -56,18 +56,18 @@ public class PlayerController : MonoBehaviour
             anim.SetTrigger("WalkRight");
             rigidbody.velocity = new Vector2(move * playerSpeed, rigidbody.velocity.y);// Move the character by finding the target velocity
             //TODO: Fix angular velocity
-            UnityEngine.Debug.Log("PlayerController PlayerMovement WalkRight");
+            //UnityEngine.Debug.Log("PlayerController PlayerMovement WalkRight");
 
         }
         else if (move > 0.0f)
         {
             rigidbody.velocity = new Vector2(move * playerSpeed, rigidbody.velocity.y);// Move the character by finding the target velocity
-            UnityEngine.Debug.Log("PlayerController PlayerMovement WalkLeft");
+            //UnityEngine.Debug.Log("PlayerController PlayerMovement WalkLeft");
         }
         else
         {
             anim.SetTrigger("Idle");
-            UnityEngine.Debug.Log("PlayerController PlayerMovement Idle");
+            //UnityEngine.Debug.Log("PlayerController PlayerMovement Idle");
         }
 
         if (Input.GetButtonDown("Jump") && player == PlayerState.GROUND)
@@ -91,11 +91,14 @@ public class PlayerController : MonoBehaviour
     {
         if (Collider2D.IsTouchingLayers(PlatformLayer))
         {
+            //UnityEngine.Debug.Log("PlayerController StateMachine GROUND");
             player = PlayerState.GROUND;
         }
-        if (Collider2D.IsTouchingLayers(DeathLayer))
+        if (Collider2D.IsTouchingLayers(GameOverLayer))
         {
-            player = PlayerState.DEATH;
+            UnityEngine.Debug.Log("PlayerController StateMachine GAMEOVER");
+            player = PlayerState.GAMEOVER;
+
         }
     }
 
@@ -104,7 +107,6 @@ public class PlayerController : MonoBehaviour
     /// Calls movement methods
     /// </summary>
     public void Update(){
-        //StateMachine(); 
         PlayerMovement();
     }
 }
