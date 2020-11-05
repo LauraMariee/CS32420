@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Security.Cryptography;
 using UnityEngine;
@@ -51,17 +52,19 @@ public class PlayerController : MonoBehaviour
         StateMachine();
         
 
-        if (move < 0.0f)
+        if (move > 0.0f)
         {
             anim.SetTrigger("WalkRight");
             rigidbody.velocity = new Vector2(move * playerSpeed, rigidbody.velocity.y);// Move the character by finding the target velocity
+            rigidbody.angularVelocity = 0;
             //TODO: Fix angular velocity
             //UnityEngine.Debug.Log("PlayerController PlayerMovement WalkRight");
 
         }
-        else if (move > 0.0f)
+        else if (move < 0.0f)
         {
             rigidbody.velocity = new Vector2(move * playerSpeed, rigidbody.velocity.y);// Move the character by finding the target velocity
+            rigidbody.angularVelocity = 0;
             //UnityEngine.Debug.Log("PlayerController PlayerMovement WalkLeft");
         }
         else
@@ -83,10 +86,12 @@ public class PlayerController : MonoBehaviour
         player = PlayerState.JUMP;
         anim.SetTrigger("Jump Pressed");
         rigidbody.AddForce(Vector2.up * jumpForce); 
-        UnityEngine.Debug.Log("PlayerController PlayerMovement Jump");
+        //UnityEngine.Debug.Log("PlayerController PlayerMovement Jump");
     }
 
-
+    /// <summary>
+    /// Changes player state depending on layer collision
+    /// </summary>
     public void StateMachine()
     {
         if (Collider2D.IsTouchingLayers(PlatformLayer))
@@ -96,7 +101,7 @@ public class PlayerController : MonoBehaviour
         }
         if (Collider2D.IsTouchingLayers(GameOverLayer))
         {
-            UnityEngine.Debug.Log("PlayerController StateMachine GAMEOVER");
+            //UnityEngine.Debug.Log("PlayerController StateMachine GAMEOVER");
             anim.SetTrigger("GameOver");
             player = PlayerState.GAMEOVER;
 
@@ -107,7 +112,7 @@ public class PlayerController : MonoBehaviour
     /// <summary>"
     /// Calls movement methods
     /// </summary>
-    public void Update(){
+    public void Update(){ 
         PlayerMovement();
     }
 }
