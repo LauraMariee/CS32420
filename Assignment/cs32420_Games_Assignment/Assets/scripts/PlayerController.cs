@@ -49,7 +49,8 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public void PlayerMovement()
     {
-        float move = Input.GetAxis ("Horizontal");
+        float move = Input.GetAxis("Horizontal");
+        
         StateMachine();
         
 
@@ -57,7 +58,6 @@ public class PlayerController : MonoBehaviour
         {
             anim.SetTrigger("WalkRight");
             rigidbody.velocity = new Vector2(move * playerSpeed, rigidbody.velocity.y);// Move the character by finding the target velocity
-            rigidbody.angularVelocity = 0;
             //TODO: Fix angular velocity
             //UnityEngine.Debug.Log("PlayerController PlayerMovement WalkRight");
 
@@ -78,9 +78,13 @@ public class PlayerController : MonoBehaviour
         {
             Jump();
         }
+
+        if(player == PlayerState.CLIMB)
+        {
+            Climb();
+        }
             
     }
-
 
     public void Jump()
     {
@@ -88,6 +92,18 @@ public class PlayerController : MonoBehaviour
         anim.SetTrigger("Jump Pressed");
         rigidbody.AddForce(Vector2.up * jumpForce); 
         //UnityEngine.Debug.Log("PlayerController PlayerMovement Jump");
+    }
+
+    public void Climb()
+    {
+        if (Input.GetKeyDown("w") || Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            rigidbody.velocity = new Vector2(0, playerSpeed);
+        }
+        else if(Input.GetKeyDown("s") || Input.GetKeyDown(KeyCode.DownArrow)){
+            rigidbody.velocity = new Vector2(0, -playerSpeed);
+        }
+        
     }
 
     /// <summary>
