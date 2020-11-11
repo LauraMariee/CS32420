@@ -16,7 +16,8 @@ public class PlayerController : MonoBehaviour
 
     //Layers
     public LayerMask PlatformLayer;
-    public LayerMask GameOverLayer; 
+    public LayerMask GameOverLayer;
+    public LayerMask LadderLayer;
 
     //Player State
     public enum PlayerState
@@ -104,7 +105,12 @@ public class PlayerController : MonoBehaviour
             //UnityEngine.Debug.Log("PlayerController StateMachine GAMEOVER");
             anim.SetTrigger("GameOver");
             player = PlayerState.GAMEOVER;
-
+        }
+        if (Collider2D.IsTouchingLayers(LadderLayer))
+        {
+            UnityEngine.Debug.Log("PlayerController StateMachine CLIMB");
+            anim.SetTrigger("Climb");
+            player = PlayerState.CLIMB;
         }
     }
 
