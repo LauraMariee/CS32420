@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     public LayerMask PlatformLayer;
     public LayerMask GameOverLayer;
     public LayerMask LadderLayer;
+    public LayerMask WinLayer; 
 
     //Player State
     public enum PlayerState
@@ -25,7 +26,8 @@ public class PlayerController : MonoBehaviour
         JUMP,
         GROUND,
         CLIMB,
-        GAMEOVER
+        GAMEOVER, 
+        WIN
     };
 
     private Rigidbody2D rigidbody;
@@ -96,6 +98,7 @@ public class PlayerController : MonoBehaviour
 
     public void Climb()
     {
+        anim.SetTrigger("Climb");
         if (Input.GetKeyDown("w") || Input.GetKeyDown(KeyCode.UpArrow))
         {
             rigidbody.velocity = new Vector2(0, playerSpeed);
@@ -124,9 +127,13 @@ public class PlayerController : MonoBehaviour
         }
         if (Collider2D.IsTouchingLayers(LadderLayer))
         {
-            UnityEngine.Debug.Log("PlayerController StateMachine CLIMB");
-            anim.SetTrigger("Climb");
+            //UnityEngine.Debug.Log("PlayerController StateMachine CLIMB");
             player = PlayerState.CLIMB;
+        }
+        if (Collider2D.IsTouchingLayers(WinLayer))
+        {
+            //UnityEngine.Debug.Log("PlayerController StateMachine WIN");
+            player = PlayerState.WIN;
         }
     }
 
