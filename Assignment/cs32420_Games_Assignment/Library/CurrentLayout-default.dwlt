@@ -21,7 +21,11 @@ MonoBehaviour:
   m_ShowMode: 4
   m_Title: 
   m_RootView: {fileID: 2}
+<<<<<<< HEAD
   m_MinSize: {x: 875, y: 300}
+=======
+  m_MinSize: {x: 875, y: 371}
+>>>>>>> bugs
   m_MaxSize: {x: 10000, y: 10000}
   m_Maximized: 1
 --- !u!114 &2
@@ -46,7 +50,11 @@ MonoBehaviour:
     y: 0
     width: 2560
     height: 1358
+<<<<<<< HEAD
   m_MinSize: {x: 875, y: 300}
+=======
+  m_MinSize: {x: 875, y: 371}
+>>>>>>> bugs
   m_MaxSize: {x: 10000, y: 10000}
 --- !u!114 &3
 MonoBehaviour:
@@ -112,10 +120,17 @@ MonoBehaviour:
     y: 30
     width: 2560
     height: 1308
+<<<<<<< HEAD
   m_MinSize: {x: 642, y: 492}
   m_MaxSize: {x: 14001, y: 14042}
   vertical: 0
   controlID: 1659
+=======
+  m_MinSize: {x: 677, y: 321}
+  m_MaxSize: {x: 12002, y: 8021}
+  vertical: 0
+  controlID: 397
+>>>>>>> bugs
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -137,10 +152,17 @@ MonoBehaviour:
     y: 0
     width: 1928
     height: 1308
+<<<<<<< HEAD
   m_MinSize: {x: 402, y: 492}
   m_MaxSize: {x: 10001, y: 14042}
   vertical: 1
   controlID: 1660
+=======
+  m_MinSize: {x: 402, y: 321}
+  m_MaxSize: {x: 8002, y: 8021}
+  vertical: 1
+  controlID: 398
+>>>>>>> bugs
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -165,7 +187,11 @@ MonoBehaviour:
   m_MinSize: {x: 402, y: 221}
   m_MaxSize: {x: 8002, y: 4021}
   vertical: 0
+<<<<<<< HEAD
   controlID: 1661
+=======
+  controlID: 399
+>>>>>>> bugs
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -421,8 +447,13 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
+<<<<<<< HEAD
       m_SelectedIDs: 04faffff
       m_LastClickedID: -1532
+=======
+      m_SelectedIDs: 4e390000
+      m_LastClickedID: 14670
+>>>>>>> bugs
       m_ExpandedIDs: 58fbffff46390000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
