@@ -41,10 +41,13 @@ public class PlayerController : MonoBehaviour
     public PlayerState player;
 
     public void Start(){
+        gameWon = false;
         anim = gameObject.GetComponent<Animator>();
         anim.SetTrigger("Idle");
         rigidbody = GetComponent<Rigidbody2D>(); 
     }
+
+    public bool gameWon; 
 
     /// <summary>
     /// Method which calculates the sprites movement based on speed.
@@ -132,9 +135,11 @@ public class PlayerController : MonoBehaviour
         }
         if (Collider2D.IsTouchingLayers(WinLayer))
         {
-            //UnityEngine.Debug.Log("PlayerController StateMachine WIN");
+            UnityEngine.Debug.Log("PlayerController StateMachine WIN");
             player = PlayerState.WIN;
+            gameWon = true; 
         }
+        
     }
 
 
