@@ -6,15 +6,27 @@ using UnityEngine;
 public class EnvironmentController : MonoBehaviour
 {
     public PlayerController playerController;
-
+    public GameObject rock; 
 
     // Start is called before the first frame update
     void Start()
     {
-
     }
 
     public void FixedUpdate()
+    {
+        winGameCheck();
+    }
+
+    public void Update()
+    {
+        if (rock.GetComponent<Rock>().rockTriggered == true)
+        {
+            rock.GetComponent<Rock>().rockMovement();
+        }
+    }
+
+    public void winGameCheck()
     {
         if (playerController.gameWon == true)
         {
@@ -23,6 +35,5 @@ public class EnvironmentController : MonoBehaviour
             //newLevel or win screen logic
         }
     }
-
 
 }
