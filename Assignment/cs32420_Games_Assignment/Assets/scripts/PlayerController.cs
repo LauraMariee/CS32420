@@ -42,12 +42,14 @@ public class PlayerController : MonoBehaviour
 
     public void Start(){
         gameWon = false;
+        gameLost = false;
         anim = gameObject.GetComponent<Animator>();
         anim.SetTrigger("Idle");
         rigidbody = GetComponent<Rigidbody2D>(); 
     }
 
-    public bool gameWon; 
+    public bool gameWon;
+    public bool gameLost; 
 
     /// <summary>
     /// Method which calculates the sprites movement based on speed.
@@ -127,6 +129,7 @@ public class PlayerController : MonoBehaviour
             //UnityEngine.Debug.Log("PlayerController StateMachine GAMEOVER");
             anim.SetTrigger("GameOver");
             player = PlayerState.GAMEOVER;
+            gameLost = true; 
         }
         if (Collider2D.IsTouchingLayers(LadderLayer))
         {
