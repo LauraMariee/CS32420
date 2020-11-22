@@ -15,6 +15,7 @@ public class EnvironmentController : MonoBehaviour
 
     public void FixedUpdate()
     {
+        loseGameCheck();
         winGameCheck();
     }
 
@@ -26,11 +27,23 @@ public class EnvironmentController : MonoBehaviour
         }
     }
 
+
+    public void loseGameCheck()
+    {
+        if (playerController.gameLost == true)
+        {
+            UnityEngine.Debug.Log("EnvironmentController FixedUpdate loseGameCheck");
+            SceneManager.LoadScene("GameOver"); //change scene
+            //newLevel or win screen logic
+        }
+    }
+
+
     public void winGameCheck()
     {
         if (playerController.gameWon == true)
         {
-            UnityEngine.Debug.Log("EnvironmentController FixedUpdate");
+            UnityEngine.Debug.Log("EnvironmentController FixedUpdatewinGameCheck");
             SceneManager.LoadScene("Win"); //change scene
             //newLevel or win screen logic
         }
