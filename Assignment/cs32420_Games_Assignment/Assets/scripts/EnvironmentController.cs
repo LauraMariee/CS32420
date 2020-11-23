@@ -49,4 +49,9 @@ public class EnvironmentController : MonoBehaviour
         }
     }
 
+    public void nextLevel()
+    {
+        //next level
+    }
+
 }
