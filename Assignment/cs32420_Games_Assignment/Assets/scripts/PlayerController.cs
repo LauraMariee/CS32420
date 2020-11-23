@@ -129,7 +129,7 @@ public class PlayerController : MonoBehaviour
             //UnityEngine.Debug.Log("PlayerController StateMachine GAMEOVER");
             anim.SetTrigger("GameOver");
             player = PlayerState.GAMEOVER;
-            //gameLost = true; 
+            gameLost = true; 
         }
         if (Collider2D.IsTouchingLayers(LadderLayer))
         {
