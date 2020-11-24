@@ -6,32 +6,39 @@ using UnityEngine;
 public class UIController : MonoBehaviour
 {
 
-    public string currentLevel;
+    public GameObject Instruction_Screen;
+    public GameObject Level_Select;
+    public GameObject Title_Screen;
 
-    public void getCurrentLevel()
+    public void Quit()
     {
-        currentLevel = SceneManager.GetActiveScene().name; 
-    }
-
-    public void quit()
-    {
-        Debug.Log("quit");
+        Debug.Log("UIController Quit");
+        //Quit Game
     }
 
     public void mainMenu()
     {
-        Debug.Log("Main Menu"); 
+        Debug.Log("UIController mainMenu"); 
+        SceneManager.LoadScene("StartScreen"); 
     }
 
-    public void restart()
+    public void Restart()
     {
-        Debug.Log("restart");
-        SceneManager.LoadScene(currentLevel);
+        Debug.Log("UIController Restart");
+        //SceneManager.LoadScene(currentLevel);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Instruction()
     {
-        
+        //enable components for instructions
+        Instruction_Screen.SetActive(true);
+        Level_Select.SetActive(false);
+        Title_Screen.SetActive(false); 
+    }
+
+    public void levelSelect()
+    {
+        Debug.Log("UIController levelSelect");
+        //enable components for levelSelect
     }
 }
