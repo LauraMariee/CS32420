@@ -6,12 +6,9 @@ using UnityEngine;
 public class EnvironmentController : MonoBehaviour
 {
     public PlayerController playerController;
-    public GameObject rock; 
+    public GameObject rock;
+    public UIController uiController;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
 
     public void FixedUpdate()
     {
@@ -48,6 +45,7 @@ public class EnvironmentController : MonoBehaviour
             //newLevel or win screen logic
         }
     }
+
 
     public void nextLevel()
     {
