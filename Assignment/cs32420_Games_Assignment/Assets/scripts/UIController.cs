@@ -8,12 +8,6 @@ public class UIController : MonoBehaviour
 
     public string currentLevel;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     public void getCurrentLevel()
     {
         currentLevel = SceneManager.GetActiveScene().name; 
