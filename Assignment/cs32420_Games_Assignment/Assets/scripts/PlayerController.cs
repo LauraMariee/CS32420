@@ -8,7 +8,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     //Play positioning enums
-    public float playerSpeed = 10;
+    private float playerSpeed = 10;
 
     //Declare Axis
     private float xAxis;
@@ -36,20 +36,24 @@ public class PlayerController : MonoBehaviour
     //Height of jump
     public float jumpForce = 5; 
 
+    //player animator object
     private Animator anim;
 
-    public PlayerState player;
+    private PlayerState playerState;
+    public TimeTravel timeTravel; 
 
-    public void Start(){
+    public bool gameWon;
+    public bool gameLost;
+
+
+    public void Start()
+    {
         gameWon = false;
         gameLost = false;
         anim = gameObject.GetComponent<Animator>();
         anim.SetTrigger("Idle");
-        rigidbody = GetComponent<Rigidbody2D>(); 
+        rigidbody = GetComponent<Rigidbody2D>();
     }
-
-    public bool gameWon;
-    public bool gameLost; 
 
     /// <summary>
     /// Method which calculates the sprites movement based on speed.
@@ -65,7 +69,6 @@ public class PlayerController : MonoBehaviour
         {
             anim.SetTrigger("WalkRight");
             rigidbody.velocity = new Vector2(move * playerSpeed, rigidbody.velocity.y);// Move the character by finding the target velocity
-            //TODO: Fix angular velocity
             //UnityEngine.Debug.Log("PlayerController PlayerMovement WalkRight");
 
         }
@@ -81,12 +84,12 @@ public class PlayerController : MonoBehaviour
             //UnityEngine.Debug.Log("PlayerController PlayerMovement Idle");
         }
 
-        if (Input.GetButtonDown("Jump") && player == PlayerState.GROUND)
+        if (Input.GetButtonDown("Jump") && playerState == PlayerState.GROUND)
         {
             Jump();
         }
 
-        if(player == PlayerState.CLIMB)
+        if(playerState == PlayerState.CLIMB)
         {
             Climb();
         }
@@ -95,7 +98,7 @@ public class PlayerController : MonoBehaviour
 
     public void Jump()
     {
-        player = PlayerState.JUMP;
+        playerState = PlayerState.JUMP;
         anim.SetTrigger("Jump Pressed");
         rigidbody.AddForce(Vector2.up * jumpForce); 
         //UnityEngine.Debug.Log("PlayerController PlayerMovement Jump");
@@ -114,6 +117,14 @@ public class PlayerController : MonoBehaviour
         
     }
 
+    public void TimeTravel()
+    {
+        timeTravel.AddPlayerPosition(rigidbody.position);
+        timeTravel.ShowPlayerPositions(); 
+    }
+
+
+
     /// <summary>
     /// Changes player state depending on layer collision
     /// </summary>
@@ -122,24 +133,24 @@ public class PlayerController : MonoBehaviour
         if (Collider2D.IsTouchingLayers(PlatformLayer))
         {
             //UnityEngine.Debug.Log("PlayerController StateMachine GROUND");
-            player = PlayerState.GROUND;
+            playerState = PlayerState.GROUND;
         }
         if (Collider2D.IsTouchingLayers(GameOverLayer))
         {
             //UnityEngine.Debug.Log("PlayerController StateMachine GAMEOVER");
             anim.SetTrigger("GameOver");
-            player = PlayerState.GAMEOVER;
+            playerState = PlayerState.GAMEOVER;
             gameLost = true; 
         }
         if (Collider2D.IsTouchingLayers(LadderLayer))
         {
             //UnityEngine.Debug.Log("PlayerController StateMachine CLIMB");
-            player = PlayerState.CLIMB;
+            playerState = PlayerState.CLIMB;
         }
         if (Collider2D.IsTouchingLayers(WinLayer))
         {
             UnityEngine.Debug.Log("PlayerController StateMachine WIN");
-            player = PlayerState.WIN;
+            playerState = PlayerState.WIN;
             gameWon = true; 
         }
         
@@ -151,5 +162,6 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public void Update(){ 
         PlayerMovement();
+        TimeTravel(); 
     }
 }
