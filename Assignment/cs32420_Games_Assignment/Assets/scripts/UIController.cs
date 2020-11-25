@@ -10,10 +10,25 @@ public class UIController : MonoBehaviour
     public GameObject Level_Select;
     public GameObject Title_Screen;
 
+
+    public enum GameScreen
+    {
+        GAMEOVER, 
+        WIN, 
+        MAINMENU
+    };
+
     public void Quit()
     {
         Debug.Log("UIController Quit");
         //Quit Game
+    }
+
+
+    public void Play()
+    {
+        Debug.Log("UIController Play");
+        SceneManager.LoadScene("levelOne");
     }
 
     public void mainMenu()
@@ -30,7 +45,6 @@ public class UIController : MonoBehaviour
 
     public void Instruction()
     {
-        //enable components for instructions
         Instruction_Screen.SetActive(true);
         Level_Select.SetActive(false);
         Title_Screen.SetActive(false); 
@@ -39,6 +53,22 @@ public class UIController : MonoBehaviour
     public void levelSelect()
     {
         Debug.Log("UIController levelSelect");
-        //enable components for levelSelect
+        Instruction_Screen.SetActive(false);
+        Level_Select.SetActive(true);
+        Title_Screen.SetActive(false);
+    }
+
+    public void titleScreen()
+    {
+        Debug.Log("UIController titleScreen");
+        Instruction_Screen.SetActive(false);
+        Level_Select.SetActive(false);
+        Title_Screen.SetActive(true);
+    }
+
+    public void levelOne()
+    {
+        Debug.Log("UIController levelOne");
+        SceneManager.LoadScene("levelOne");
     }
 }
