@@ -9,6 +9,9 @@ public class EnvironmentController : MonoBehaviour
     public GameObject rock;
     public UIController uiController;
 
+    public GameObject winUI;
+    public GameObject loseUI;
+    public Camera camera; 
 
     public void FixedUpdate()
     {
@@ -30,8 +33,9 @@ public class EnvironmentController : MonoBehaviour
         if (playerController.gameLost == true)
         {
             UnityEngine.Debug.Log("EnvironmentController FixedUpdate loseGameCheck");
-            SceneManager.LoadScene("GameOver"); //change scene
-            //newLevel or win screen logic
+            camera.GetComponent<Transform>().position = new Vector2(8.02f, -1.3f); //moves camera out
+            playerController.enabled = false; //stops player moving
+            loseUI.SetActive(true); //Show UI
         }
     }
 
@@ -40,16 +44,10 @@ public class EnvironmentController : MonoBehaviour
     {
         if (playerController.gameWon == true)
         {
-            UnityEngine.Debug.Log("EnvironmentController FixedUpdatewinGameCheck");
-            SceneManager.LoadScene("Win"); //change scene
-            //newLevel or win screen logic
+            UnityEngine.Debug.Log("EnvironmentController FixedUpdateWinGameCheck");
+            camera.GetComponent<Transform>().position = new Vector2(8.02f, -1.3f); //moves camera out
+            playerController.enabled = false;//stops player moving
+            winUI.SetActive(true); //Show UI
         }
     }
-
-
-    public void nextLevel()
-    {
-        //next level
-    }
-
 }

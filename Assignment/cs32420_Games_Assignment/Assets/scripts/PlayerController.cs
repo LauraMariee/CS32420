@@ -119,8 +119,8 @@ public class PlayerController : MonoBehaviour
 
     public void TimeTravel()
     {
-        timeTravel.AddPlayerPosition(rigidbody.position);
-        timeTravel.ShowPlayerPositions(); 
+//        timeTravel.AddPlayerPosition(rigidbody.position);
+//        timeTravel.ShowPlayerPositions(); 
     }
 
 
