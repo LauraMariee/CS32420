@@ -11,12 +11,6 @@ public class UIController : MonoBehaviour
     public GameObject Title_Screen;
 
 
-    public enum GameScreen
-    {
-        GAMEOVER, 
-        WIN, 
-        MAINMENU
-    };
 
 
     public void Quit()
@@ -41,7 +35,7 @@ public class UIController : MonoBehaviour
     public void Restart()
     {
         Debug.Log("UIController Restart");
-        //SceneManager.LoadScene(currentLevel);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void Instruction()
@@ -71,5 +65,20 @@ public class UIController : MonoBehaviour
     {
         Debug.Log("UIController levelOne");
         SceneManager.LoadScene("levelOne");
+    }
+
+    public void levelTwo()
+    {
+        Debug.Log("UIController levelTwo");
+        SceneManager.LoadScene("levelTwo");
+    }
+
+    public void nextLevel()
+    {
+        if (SceneManager.GetActiveScene().name == "levelOne")
+        {
+            Debug.Log("UIController nextLevel");
+            levelTwo();
+        }
     }
 }
