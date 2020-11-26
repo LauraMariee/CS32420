@@ -8,7 +8,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     //Play positioning enums
-    private float playerSpeed = 10;
+    private float playerSpeed = 5;
 
     //Declare Axis
     private float xAxis;
@@ -119,8 +119,8 @@ public class PlayerController : MonoBehaviour
 
     public void TimeTravel()
     {
-        timeTravel.AddPlayerPosition(rigidbody.position);
-        timeTravel.ShowPlayerPositions(); 
+//        timeTravel.AddPlayerPosition(rigidbody.position);
+//        timeTravel.ShowPlayerPositions(); 
     }
 
 

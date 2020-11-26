@@ -30,7 +30,7 @@ public class TimeTravel : MonoBehaviour
  //       if (playerPosition.Count <= frameLimit)
  //       {
             UnityEngine.Debug.Log("PlayerController AddPlayerPosition");
-            playerPosition.Add(new Tuple<string, Vector2>(GetTimeStamp(), position)); 
+            //playerPosition.Add(new Tuple<string, Vector2>(GetTimeStamp(), position)); 
  //      }
     }
 
