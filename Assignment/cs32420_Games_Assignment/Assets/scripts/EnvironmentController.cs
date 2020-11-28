@@ -5,13 +5,12 @@ using UnityEngine;
 
 public class EnvironmentController : MonoBehaviour
 {
-    public PlayerController playerController;
+    private PlayerController playerController;
     public GameObject rock;
     public UIController uiController;
 
-    public GameObject winUI;
-    public GameObject loseUI;
-    public Camera camera; 
+    private GameObject winUI;
+    private GameObject loseUI;
 
     public void FixedUpdate()
     {
@@ -19,8 +18,21 @@ public class EnvironmentController : MonoBehaviour
         winGameCheck();
     }
 
+    public void Start()
+    {
+        winUI = GameObject.Find("WinUI");
+        loseUI = GameObject.Find("Los" +
+            "" +
+            "" +
+            "" +
+            "eUI");
+        playerController = GameObject.Find("Player").GetComponent<PlayerController>();
+    }
+
+
     public void Update()
     {
+        escKeyPressed(); 
         if (rock.GetComponent<Rock>().rockTriggered == true)
         {
             rock.GetComponent<Rock>().rockMovement();
@@ -32,8 +44,7 @@ public class EnvironmentController : MonoBehaviour
     {
         if (playerController.gameLost == true)
         {
-            UnityEngine.Debug.Log("EnvironmentController FixedUpdate loseGameCheck");
-            camera.GetComponent<Transform>().position = new Vector2(8.02f, -1.3f); //moves camera out
+            //UnityEngine.Debug.Log("EnvironmentController FixedUpdate loseGameCheck");
             playerController.enabled = false; //stops player moving
             loseUI.SetActive(true); //Show UI
         }
@@ -44,10 +55,18 @@ public class EnvironmentController : MonoBehaviour
     {
         if (playerController.gameWon == true)
         {
-            UnityEngine.Debug.Log("EnvironmentController FixedUpdateWinGameCheck");
-            camera.GetComponent<Transform>().position = new Vector2(8.02f, -1.3f); //moves camera out
+            //UnityEngine.Debug.Log("EnvironmentController FixedUpdateWinGameCheck");
             playerController.enabled = false;//stops player moving
             winUI.SetActive(true); //Show UI
+        }
+    }
+
+
+    public void escKeyPressed()
+    {
+        if (Input.GetKeyDown("escape"))
+        {
+            Debug.Log("EnvironmentController escKeyPressed");
         }
     }
 }
