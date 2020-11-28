@@ -1,14 +1,18 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class EnvironmentController : MonoBehaviour
 {
-    public PlayerController playerController;
-    public GameObject rock;
     public UIController uiController;
-
+    public GameObject winUI;
+    public GameObject loseUI;
+    public GameObject rocksParentNode;
+    
+    private PlayerController playerController;
+    private Rock[] rocks;
 
     public void FixedUpdate()
     {
@@ -16,12 +20,17 @@ public class EnvironmentController : MonoBehaviour
         winGameCheck();
     }
 
+    public void Start()
+    {
+        playerController = GameObject.Find("Player").GetComponent<PlayerController>();
+        rocks = rocksParentNode.GetComponentsInChildren<Rock>();
+    }
+
+
     public void Update()
     {
-        if (rock.GetComponent<Rock>().rockTriggered == true)
-        {
-            rock.GetComponent<Rock>().rockMovement();
-        }
+        escKeyPressed(); 
+        TimeTravelPressed();
     }
 
 
@@ -29,9 +38,9 @@ public class EnvironmentController : MonoBehaviour
     {
         if (playerController.gameLost == true)
         {
-            UnityEngine.Debug.Log("EnvironmentController FixedUpdate loseGameCheck");
-            SceneManager.LoadScene("GameOver"); //change scene
-            //newLevel or win screen logic
+            //UnityEngine.Debug.Log("EnvironmentController FixedUpdate loseGameCheck");
+            playerController.enabled = false; //stops player moving
+            loseUI.SetActive(true); //Show UI
         }
     }
 
@@ -40,16 +49,35 @@ public class EnvironmentController : MonoBehaviour
     {
         if (playerController.gameWon == true)
         {
-            UnityEngine.Debug.Log("EnvironmentController FixedUpdatewinGameCheck");
-            SceneManager.LoadScene("Win"); //change scene
-            //newLevel or win screen logic
+            //UnityEngine.Debug.Log("EnvironmentController FixedUpdateWinGameCheck");
+            playerController.enabled = false;//stops player moving
+            winUI.SetActive(true); //Show UI
         }
     }
 
 
-    public void nextLevel()
+    public void escKeyPressed()
     {
-        //next level
+        if (Input.GetKeyDown("escape"))
+        {
+            Debug.Log("EnvironmentController escKeyPressed");
+        }
     }
 
+    public void TimeTravelPressed()
+    {
+        if (Input.GetKeyDown("e"))
+        {
+            TriggerTimeTravel(Int32.MaxValue);
+        }
+    }
+
+    private void TriggerTimeTravel(int duration)
+    {
+        playerController.TriggerTimeTravel(duration);
+        foreach (var r in rocks) {
+            r.TriggerTimeTravel(duration);
+        }
+    }
+    
 }

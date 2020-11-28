@@ -1,44 +1,106 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
-using System;
+using System.Linq;
 using UnityEngine;
 
-public class TimeTravel : MonoBehaviour
+public class TimeTravel<T> where T : struct
 {
+    /// <summary>
+    /// Defines how often a state is actually saved - "save a state every x frames"
+    /// </summary>
+    private const int StateCaptureInterval = 5;
+    /// <summary>
+    /// Defines how many frames can be travelled back at most and thus how many are saved in the buffer.
+    /// </summary>
+    private const int CapturedStateCountLimit = 20 * 60 / StateCaptureInterval;
+    
+    private int framesSinceLastCapture = 0;
 
-    public List<Tuple<string, Vector2>> playerPosition;
+    private readonly List<T?> stateBuffer = Enumerable.Repeat<T?>(null, CapturedStateCountLimit).ToList();
+    private int stateBufferHeadIdx = -1;
+    private int stateBufferBacklogSize = 0;
 
-    private int frameLimit;
-    private string currentTime;
+    public bool IsTravellingBack { private set; get; } = false;
+    private int remainingFramesForTravellingBack = 0;
+    
 
-    // Start is called before the first frame update
-    void Start()
+    public void CaptureState(T newState)
     {
-        frameLimit = 1200;
-    }
-
-    private string GetTimeStamp()
-    {
-        UnityEngine.Debug.Log("TimeTravel GetTimeStamp");
-        currentTime = Time.time.ToString("f6");
-        return currentTime; 
-    }
-
-    public void AddPlayerPosition(Vector2 position)
-    {
-        //if less than or equal to 1200 frames
-        if (playerPosition.Count < frameLimit)
-        {
-            UnityEngine.Debug.Log("PlayerController AddPlayerPosition");
-            playerPosition.Add(new Tuple<string, Vector2>(GetTimeStamp(), position)); 
+        if (IsTravellingBack) {
+            Debug.LogWarning("TimeTravel CaptureStateForFrame - trying to capture a frame but travelling in time");
+            return;
         }
+
+        if (framesSinceLastCapture < StateCaptureInterval) {
+            framesSinceLastCapture++;
+            // continue to wait...
+            return;
+        }
+        
+        framesSinceLastCapture = 0;
+
+        stateBufferHeadIdx++;
+        if (stateBufferHeadIdx >= CapturedStateCountLimit)
+        {
+            stateBufferHeadIdx = 0;
+        }
+        
+        stateBuffer[stateBufferHeadIdx] = newState;
+
+        if (stateBufferBacklogSize < CapturedStateCountLimit)
+        {
+            stateBufferBacklogSize++;
+            // else stateBacklogSize does not get increased since we are over-writing data now
+        }
+
+        //PrintDebugInfo("CaptureStateForFrame");
     }
 
-    public void ShowPlayerPositions()
-    {
-        for(int i = 0; i < playerPosition.Count; i++)
-        {
-            UnityEngine.Debug.Log(playerPosition[i]);
-        }
+    public void StartToTravelBack(int framesDuration) {
+        remainingFramesForTravellingBack = Math.Min(framesDuration, stateBufferBacklogSize);
+        stateBufferBacklogSize = 0;
+        IsTravellingBack = true;
     }
+
+    public T? GetNextPastFrame() {
+        if (!IsTravellingBack) {
+            Debug.LogWarning("TimeTravel GetNextPastFrame - trying to get a frame but not travelling in time");
+            return null;
+        }
+
+        PrintDebugInfo("GetNextPastFrame");
+
+        var result = stateBuffer[stateBufferHeadIdx];
+        stateBuffer[stateBufferHeadIdx] = null;
+        
+        stateBufferHeadIdx--;
+        if (stateBufferHeadIdx < 0) {
+            stateBufferHeadIdx = CapturedStateCountLimit - 1;
+        }
+
+        remainingFramesForTravellingBack--;
+        if (remainingFramesForTravellingBack == 0) {
+            IsTravellingBack = false;
+        }
+
+        return result;
+    }
+
+    private void PrintDebugInfo(string prefix)
+    {
+        var bufferAsStr = string.Join(" ; ",
+            stateBuffer
+                .Select(d => d.HasValue ? d.ToString() : "NULL")
+                .ToArray()
+        );
+        var headValue = stateBuffer[stateBufferHeadIdx];
+        var headValueStr = headValue.HasValue ? headValue.Value.ToString() : "NULL";
+        Debug.Log(
+            $"current time travel after {prefix}: " +
+            $"head={headValueStr}@{stateBufferHeadIdx} backlogSize={stateBufferBacklogSize} " +
+            $"isTravelling={IsTravellingBack} remaining={remainingFramesForTravellingBack} " +
+            $"buffer={bufferAsStr}"
+        );
+    }
+    
 }
