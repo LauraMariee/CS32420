@@ -1,13 +1,20 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class EnvironmentController : MonoBehaviour
 {
-    private PlayerController playerController;
+    public PlayerController playerController;
     public GameObject rock;
     public UIController uiController;
+    public GameObject winUI;
+    public GameObject loseUI;
+    public GameObject rocksParentNode;
+    
+    private PlayerController playerController;
+    private Rock[] rocks;
 
     private GameObject winUI;
     private GameObject loseUI;
@@ -20,23 +27,15 @@ public class EnvironmentController : MonoBehaviour
 
     public void Start()
     {
-        winUI = GameObject.Find("WinUI");
-        loseUI = GameObject.Find("Los" +
-            "" +
-            "" +
-            "" +
-            "eUI");
         playerController = GameObject.Find("Player").GetComponent<PlayerController>();
+        rocks = rocksParentNode.GetComponentsInChildren<Rock>();
     }
 
 
     public void Update()
     {
         escKeyPressed(); 
-        if (rock.GetComponent<Rock>().rockTriggered == true)
-        {
-            rock.GetComponent<Rock>().rockMovement();
-        }
+        TimeTravelPressed();
     }
 
 
@@ -69,4 +68,21 @@ public class EnvironmentController : MonoBehaviour
             Debug.Log("EnvironmentController escKeyPressed");
         }
     }
+
+    public void TimeTravelPressed()
+    {
+        if (Input.GetKeyDown("e"))
+        {
+            TriggerTimeTravel(Int32.MaxValue);
+        }
+    }
+
+    private void TriggerTimeTravel(int duration)
+    {
+        playerController.TriggerTimeTravel(duration);
+        foreach (var r in rocks) {
+            r.TriggerTimeTravel(duration);
+        }
+    }
+    
 }

@@ -4,6 +4,8 @@ using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Security.Cryptography;
 using UnityEngine;
+using UnityEngine.Serialization;
+using Debug = UnityEngine.Debug;
 
 public class PlayerController : MonoBehaviour
 {
@@ -18,7 +20,7 @@ public class PlayerController : MonoBehaviour
     public LayerMask PlatformLayer;
     public LayerMask GameOverLayer;
     public LayerMask LadderLayer;
-    public LayerMask WinLayer; 
+    public LayerMask WinLayer;
 
     //Player State
     public enum PlayerState
@@ -26,21 +28,21 @@ public class PlayerController : MonoBehaviour
         JUMP,
         GROUND,
         CLIMB,
-        GAMEOVER, 
+        GAMEOVER,
         WIN
     };
 
-    private Rigidbody2D rigidbody;
-    public Collider2D Collider2D;
+    private new Rigidbody2D rigidbody; 
+    public new Collider2D collider2D;
 
     //Height of jump
-    public float jumpForce = 5; 
+    public float jumpForce = 5;
 
     //player animator object
     private Animator anim;
 
     private PlayerState playerState;
-    public TimeTravel timeTravel; 
+    private readonly TimeTravel<Vector2> timeTravel = new TimeTravel<Vector2>();
 
     public bool gameWon;
     public bool gameLost;
@@ -61,20 +63,23 @@ public class PlayerController : MonoBehaviour
     public void PlayerMovement()
     {
         float move = Input.GetAxis("Horizontal");
-        
+
         StateMachine();
-        
+
 
         if (move > 0.0f)
         {
             anim.SetTrigger("WalkRight");
-            rigidbody.velocity = new Vector2(move * playerSpeed, rigidbody.velocity.y);// Move the character by finding the target velocity
+            rigidbody.velocity =
+                new Vector2(move * playerSpeed,
+                    rigidbody.velocity.y); // Move the character by finding the target velocity
             //UnityEngine.Debug.Log("PlayerController PlayerMovement WalkRight");
-
         }
         else if (move < 0.0f)
         {
-            rigidbody.velocity = new Vector2(move * playerSpeed, rigidbody.velocity.y);// Move the character by finding the target velocity
+            rigidbody.velocity =
+                new Vector2(move * playerSpeed,
+                    rigidbody.velocity.y); // Move the character by finding the target velocity
             rigidbody.angularVelocity = 0;
             //UnityEngine.Debug.Log("PlayerController PlayerMovement WalkLeft");
         }
@@ -89,18 +94,17 @@ public class PlayerController : MonoBehaviour
             Jump();
         }
 
-        if(playerState == PlayerState.CLIMB)
+        if (playerState == PlayerState.CLIMB)
         {
             Climb();
         }
-            
     }
 
     public void Jump()
     {
         playerState = PlayerState.JUMP;
         anim.SetTrigger("Jump Pressed");
-        rigidbody.AddForce(Vector2.up * jumpForce); 
+        rigidbody.AddForce(Vector2.up * jumpForce);
         //UnityEngine.Debug.Log("PlayerController PlayerMovement Jump");
     }
 
@@ -111,18 +115,11 @@ public class PlayerController : MonoBehaviour
         {
             rigidbody.velocity = new Vector2(0, playerSpeed);
         }
-        else if(Input.GetKeyDown("s") || Input.GetKeyDown(KeyCode.DownArrow)){
+        else if (Input.GetKeyDown("s") || Input.GetKeyDown(KeyCode.DownArrow))
+        {
             rigidbody.velocity = new Vector2(0, -playerSpeed);
         }
-        
     }
-
-    public void TimeTravel()
-    {
-//        timeTravel.AddPlayerPosition(rigidbody.position);
-//        timeTravel.ShowPlayerPositions(); 
-    }
-
 
 
     /// <summary>
@@ -130,38 +127,70 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public void StateMachine()
     {
-        if (Collider2D.IsTouchingLayers(PlatformLayer))
+        if (collider2D.IsTouchingLayers(PlatformLayer))
         {
             //UnityEngine.Debug.Log("PlayerController StateMachine GROUND");
             playerState = PlayerState.GROUND;
         }
-        if (Collider2D.IsTouchingLayers(GameOverLayer))
+
+        if (collider2D.IsTouchingLayers(GameOverLayer))
         {
             //UnityEngine.Debug.Log("PlayerController StateMachine GAMEOVER");
             anim.SetTrigger("GameOver");
             playerState = PlayerState.GAMEOVER;
-            gameLost = true; 
+            gameLost = true;
         }
-        if (Collider2D.IsTouchingLayers(LadderLayer))
+
+        if (collider2D.IsTouchingLayers(LadderLayer))
         {
             //UnityEngine.Debug.Log("PlayerController StateMachine CLIMB");
             playerState = PlayerState.CLIMB;
         }
-        if (Collider2D.IsTouchingLayers(WinLayer))
+
+        if (collider2D.IsTouchingLayers(WinLayer))
         {
             UnityEngine.Debug.Log("PlayerController StateMachine WIN");
             playerState = PlayerState.WIN;
-            gameWon = true; 
+            gameWon = true;
         }
-        
     }
 
 
     /// <summary>"
     /// Calls movement methods
     /// </summary>
-    public void Update(){ 
+    public void Update()
+    {
+        if (!timeTravel.IsTravellingBack)
+        {
+            MovePlayer();
+        }
+        else
+        {
+            MovePlayerBackThroughTime();
+        }
+    }
+
+    private void MovePlayer()
+    {
         PlayerMovement();
-        TimeTravel(); 
+        timeTravel.CaptureState(rigidbody.position);
+    }
+
+    private void MovePlayerBackThroughTime()
+    {
+        rigidbody.velocity = Vector2.zero;
+        rigidbody.angularVelocity = 0;
+        var ttPosition = timeTravel.GetNextPastFrame();
+        if (ttPosition.HasValue)
+        {
+            rigidbody.position = ttPosition.Value;
+        }
+    }
+
+
+    public void TriggerTimeTravel(int duration)
+    {
+        timeTravel.StartToTravelBack(duration);
     }
 }

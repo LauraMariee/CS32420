@@ -1,38 +1,77 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Rock : MonoBehaviour
 {
-    public bool rockTriggered;
-    public int rockSpeed; 
+    private struct RockState
+    {
+        public Vector2 Position { private set; get; }
+        public bool IsTriggered { private set; get; }
+
+        public RockState(Vector2 position, bool isTriggered)
+        {
+            Position = position;
+            IsTriggered = isTriggered;
+        }
+
+        public override string ToString()
+        {
+            return $"pos={Position.ToString()} isTriggered={IsTriggered}";
+        }
+    }
+    
+    public int rockSpeed;
+    
+    private new Rigidbody2D rigidbody;
+    private bool rockTriggered;
+    private readonly TimeTravel<RockState> timeTravel = new TimeTravel<RockState>();
+
 
     // Start is called before the first frame update
     void Start()
     {
+        rigidbody = GetComponent<Rigidbody2D>();
+
         rockTriggered = false;
-        rockSpeed = 10;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (!timeTravel.IsTravellingBack)
+        {
+            if (rockTriggered)
+            {
+                rigidbody.velocity = new Vector2(-rockSpeed, GetComponent<Rigidbody2D>().velocity.x);
+            }
+
+            timeTravel.CaptureState(new RockState(rigidbody.position, rockTriggered));
+        }
+        else
+        {
+            var ttState = timeTravel.GetNextPastFrame();
+            if (ttState.HasValue)
+            {
+                rigidbody.position = ttState.Value.Position;
+                rockTriggered = ttState.Value.IsTriggered;
+                if (!rockTriggered)
+                {
+                    rigidbody.Sleep();
+                }
+            }
+        }
     }
 
     public void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Player" && !timeTravel.IsTravellingBack)
         {
-            Debug.Log("Rock OnTriggerEnter triggered");
-            rockTriggered = true; 
+            rockTriggered = true;
         }
-        
     }
 
-    public void rockMovement()
+    public void TriggerTimeTravel(int duration)
     {
-        Debug.Log("Rock rockMovement");
-        GetComponent<Rigidbody2D>().velocity = new Vector2(-rockSpeed, GetComponent<Rigidbody2D>().velocity.x);
+        timeTravel.StartToTravelBack(duration);
     }
+
 }
