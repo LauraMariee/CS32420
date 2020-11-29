@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class TimeTravel<T> where T : struct
 {
+
+
     /// <summary>
     /// Defines how often a state is actually saved - "save a state every x frames"
     /// </summary>

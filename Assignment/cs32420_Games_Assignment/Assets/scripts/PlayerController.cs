@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour
     };
 
     private new Rigidbody2D rigidbody; 
-    public new Collider2D collider2D;
+    private new Collider2D collider2D;
 
     //Height of jump
     public float jumpForce = 5;
@@ -55,6 +55,7 @@ public class PlayerController : MonoBehaviour
         anim = gameObject.GetComponent<Animator>();
         anim.SetTrigger("Idle");
         rigidbody = GetComponent<Rigidbody2D>();
+        collider2D = GetComponent<Collider2D>(); 
     }
 
     /// <summary>
