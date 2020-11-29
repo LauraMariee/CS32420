@@ -6,11 +6,8 @@ using UnityEngine;
 
 public class EnvironmentController : MonoBehaviour
 {
-    public PlayerController playerController;
     public GameObject rock;
     public UIController uiController;
-    public GameObject winUI;
-    public GameObject loseUI;
     public GameObject rocksParentNode;
     
     private PlayerController playerController;
