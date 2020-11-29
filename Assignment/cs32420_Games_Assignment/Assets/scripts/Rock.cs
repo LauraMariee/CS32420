@@ -29,8 +29,7 @@ public class Rock : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        rigidbody = GetComponent<Rigidbody2D>();
-
+        rigidbody = transform.GetChild(0).GetComponent<Rigidbody2D>();
         rockTriggered = false;
     }
 
@@ -41,7 +40,7 @@ public class Rock : MonoBehaviour
         {
             if (rockTriggered)
             {
-                rigidbody.velocity = new Vector2(-rockSpeed, GetComponent<Rigidbody2D>().velocity.x);
+                rigidbody.velocity = new Vector2(0, -rockSpeed);
             }
 
             timeTravel.CaptureState(new RockState(rigidbody.position, rockTriggered));
