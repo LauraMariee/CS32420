@@ -16,6 +16,10 @@ public class EnvironmentController : MonoBehaviour
     public GameObject winUI;
     public GameObject loseUI;
 
+    public GameObject pauseUI; 
+
+    private bool gamePaused; 
+
     public void FixedUpdate()
     {
         loseGameCheck();
@@ -26,6 +30,7 @@ public class EnvironmentController : MonoBehaviour
     {
         playerController = GameObject.Find("Player").GetComponent<PlayerController>();
         rocks = rocksParentNode.GetComponentsInChildren<Rock>();
+        gamePaused = false; 
     }
 
 
@@ -33,6 +38,7 @@ public class EnvironmentController : MonoBehaviour
     {
         escKeyPressed(); 
         TimeTravelPressed();
+        pauseGameCheck(); 
     }
 
 
@@ -43,6 +49,7 @@ public class EnvironmentController : MonoBehaviour
             //UnityEngine.Debug.Log("EnvironmentController FixedUpdate loseGameCheck");
             playerController.enabled = false; //stops player moving
             loseUI.SetActive(true); //Show UI
+            uiController.RemoveTimeTravelUI();
         }
     }
 
@@ -54,20 +61,45 @@ public class EnvironmentController : MonoBehaviour
             //UnityEngine.Debug.Log("EnvironmentController FixedUpdateWinGameCheck");
             playerController.enabled = false;//stops player moving
             winUI.SetActive(true); //Show UI
+            uiController.RemoveTimeTravelUI(); 
         }
     }
 
 
+    public void pauseGameCheck()
+    {
+        if (pauseUI.active)
+        {
+            playerController.enabled = false;
+        }
+        else
+        {
+            playerController.enabled = true;
+        }
+    }
+
     public void escKeyPressed()
     {
+        if((playerController.gameLost == true) || (playerController.gameWon == true))
+        {
+            return; 
+        }
         if (Input.GetKeyDown("escape"))
         {
+            gamePaused = true; 
             Debug.Log("EnvironmentController escKeyPressed");
+            pauseUI.SetActive(true);
+            uiController.RemoveTimeTravelUI(); 
         }
     }
 
     public void TimeTravelPressed()
     {
+        if ((playerController.gameLost == true) || (playerController.gameWon == true))
+        {
+            return;
+        }
+
         if (Input.GetKeyDown("e"))
         {
             uiController.TimeTravelTriggered();
