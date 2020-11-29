@@ -10,8 +10,8 @@ public class UIController : MonoBehaviour
     public GameObject Level_Select;
     public GameObject Title_Screen;
 
-
-
+    public GameObject Neutral_Object;
+    public GameObject Travelling_Object; 
 
     public void Quit()
     {
@@ -80,5 +80,17 @@ public class UIController : MonoBehaviour
             Debug.Log("UIController nextLevel");
             levelTwo();
         }
+    }
+
+    public void TimeTravelTriggered()
+    {
+        Neutral_Object.SetActive(false);
+        Travelling_Object.SetActive(true);
+    }
+
+    public void TimeTravelNeutral()
+    {
+        Neutral_Object.SetActive(true);
+        Travelling_Object.SetActive(false);
     }
 }
