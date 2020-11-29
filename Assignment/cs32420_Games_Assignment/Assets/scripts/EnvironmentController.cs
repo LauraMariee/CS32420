@@ -70,7 +70,12 @@ public class EnvironmentController : MonoBehaviour
     {
         if (Input.GetKeyDown("e"))
         {
+            uiController.TimeTravelTriggered();
             TriggerTimeTravel(Int32.MaxValue);
+        }
+        if (Input.GetKeyUp("e"))
+        {
+            uiController.TimeTravelNeutral();
         }
     }
 
