@@ -12284,7 +12284,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1665178469
-  m_SortingLayer: 6
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
@@ -13861,7 +13861,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -35.000015, y: -27.000015}
+  m_AnchoredPosition: {x: -35, y: -27}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &260725921
@@ -14146,7 +14146,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1665178469
-  m_SortingLayer: 6
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
@@ -14336,7 +14336,7 @@ GameObject:
   - component: {fileID: 500897365}
   - component: {fileID: 500897364}
   - component: {fileID: 500897363}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: fallingRock2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14369,7 +14369,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 782a91e1709e37248b3e219a59c4f081, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rockTriggered: 0
   rockSpeed: 20
 --- !u!50 &500897364
 Rigidbody2D:
@@ -14481,7 +14480,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -114406391
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: be75d08622d93fc488b82fbdea4cec73, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -14605,7 +14604,7 @@ GameObject:
   - component: {fileID: 634054687}
   - component: {fileID: 634054686}
   - component: {fileID: 634054685}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: fallingRock2 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14638,7 +14637,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 782a91e1709e37248b3e219a59c4f081, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rockTriggered: 0
   rockSpeed: 20
 --- !u!50 &634054686
 Rigidbody2D:
@@ -14750,7 +14748,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -114406391
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: be75d08622d93fc488b82fbdea4cec73, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -14772,6 +14770,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 656694115}
+  - component: {fileID: 656694116}
   m_Layer: 0
   m_Name: Rocks
   m_TagString: Untagged
@@ -14796,6 +14795,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!210 &656694116
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 656694114}
+  m_Enabled: 1
+  m_SortingLayerID: -1665178469
+  m_SortingLayer: 3
+  m_SortingOrder: 0
 --- !u!1 &725326699
 GameObject:
   m_ObjectHideFlags: 0
@@ -20834,13 +20844,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1088935090}
+  - component: {fileID: 1088935091}
   m_Layer: 5
   m_Name: LoseUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1088935090
 Transform:
   m_ObjectHideFlags: 0
@@ -20856,6 +20867,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!210 &1088935091
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1088935089}
+  m_Enabled: 1
+  m_SortingLayerID: -1502994223
+  m_SortingLayer: 7
+  m_SortingOrder: 0
 --- !u!1 &1163479952
 GameObject:
   m_ObjectHideFlags: 0
@@ -21016,12 +21038,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84b3652eda8b2b549a25516f83a7d047, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerController: {fileID: 1715208661}
   rock: {fileID: 1500186924}
   uiController: {fileID: 1186741835}
+  rocksParentNode: {fileID: 656694114}
   winUI: {fileID: 1384326133}
   loseUI: {fileID: 1088935089}
-  camera: {fileID: 519420031}
 --- !u!4 &1186741834
 Transform:
   m_ObjectHideFlags: 0
@@ -21121,7 +21142,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1655981475
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0.25, y: 0.25, z: 0}
@@ -22220,6 +22241,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1384326134}
+  - component: {fileID: 1384326135}
   m_Layer: 5
   m_Name: WinUI
   m_TagString: Untagged
@@ -22242,6 +22264,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!210 &1384326135
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1384326133}
+  m_Enabled: 1
+  m_SortingLayerID: -1502994223
+  m_SortingLayer: 7
+  m_SortingOrder: 0
 --- !u!1 &1500186924
 GameObject:
   m_ObjectHideFlags: 0
@@ -22256,7 +22289,7 @@ GameObject:
   - component: {fileID: 1500186925}
   - component: {fileID: 1500186928}
   - component: {fileID: 1500186930}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: fallingRock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22326,7 +22359,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -114406391
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: be75d08622d93fc488b82fbdea4cec73, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -22412,7 +22445,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 782a91e1709e37248b3e219a59c4f081, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rockTriggered: 0
   rockSpeed: 20
 --- !u!1 &1535735663
 GameObject:
@@ -22814,7 +22846,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1665178469
-  m_SortingLayer: 6
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
@@ -23435,9 +23467,8 @@ MonoBehaviour:
   WinLayer:
     serializedVersion: 2
     m_Bits: 32768
-  Collider2D: {fileID: 1715208667}
+  collider2D: {fileID: 1715208667}
   jumpForce: 250
-  timeTravel: {fileID: 1715208668}
   gameWon: 0
   gameLost: 0
 --- !u!95 &1715208662
@@ -23543,7 +23574,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -114406391
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: aac230bb4352f9a40924993849ef4998, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -23564,7 +23595,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1715208660}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 37.82, y: 2.8, z: 0}
+  m_LocalPosition: {x: 17.88, y: 2.8, z: 0}
   m_LocalScale: {x: 5.876759, y: 5.876759, z: 5.876759}
   m_Children: []
   m_Father: {fileID: 0}
@@ -23668,7 +23699,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1665178469
-  m_SortingLayer: 6
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
@@ -24271,7 +24302,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -486061221
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 2
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}

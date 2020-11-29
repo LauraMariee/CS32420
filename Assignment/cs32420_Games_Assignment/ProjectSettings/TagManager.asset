@@ -48,6 +48,9 @@ TagManager:
   - name: Foreground
     uniqueID: 2272867653
     locked: 0
+  - name: GameOver
+    uniqueID: 2629788827
+    locked: 0
   - name: Platforms
     uniqueID: 2638985821
     locked: 0
@@ -57,6 +60,6 @@ TagManager:
   - name: Player
     uniqueID: 4180560905
     locked: 0
-  - name: GameOver
-    uniqueID: 2629788827
+  - name: UI
+    uniqueID: 2791973073
     locked: 0

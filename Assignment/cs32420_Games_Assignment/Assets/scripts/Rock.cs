@@ -21,7 +21,7 @@ public class Rock : MonoBehaviour
     
     public int rockSpeed;
     
-    private new Rigidbody2D rigidbody;
+    private Rigidbody2D rigidbody;
     private bool rockTriggered;
     private readonly TimeTravel<RockState> timeTravel = new TimeTravel<RockState>();
 
