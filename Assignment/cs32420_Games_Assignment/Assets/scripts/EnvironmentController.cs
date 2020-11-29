@@ -13,8 +13,8 @@ public class EnvironmentController : MonoBehaviour
     private PlayerController playerController;
     private Rock[] rocks;
 
-    private GameObject winUI;
-    private GameObject loseUI;
+    public GameObject winUI;
+    public GameObject loseUI;
 
     public void FixedUpdate()
     {
