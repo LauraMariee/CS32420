@@ -11,14 +11,15 @@ public class UIController : MonoBehaviour
     public GameObject Title_Screen;
 
     public GameObject Neutral_Object;
-    public GameObject Travelling_Object; 
+    public GameObject Travelling_Object;
+
+    public GameObject Pause_Object; 
 
     public void Quit()
     {
         Debug.Log("UIController Quit");
         //Quit Game
     }
-
 
     public void Play()
     {
@@ -36,6 +37,12 @@ public class UIController : MonoBehaviour
     {
         Debug.Log("UIController Restart");
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+    
+    public void Resume()
+    {
+        Pause_Object.SetActive(false);
+        TimeTravelNeutral(); 
     }
 
     public void Instruction()
@@ -92,5 +99,17 @@ public class UIController : MonoBehaviour
     {
         Neutral_Object.SetActive(true);
         Travelling_Object.SetActive(false);
+    }
+
+    public void RemoveTimeTravelUI()
+    {
+        Neutral_Object.SetActive(false);
+        Travelling_Object.SetActive(false);
+    }
+
+    public void PauseMenuTriggered()
+    {
+        Pause_Object.SetActive(true);
+        RemoveTimeTravelUI(); 
     }
 }
